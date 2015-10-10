@@ -26,7 +26,7 @@ layoutTree.Node.prototype.addChild = function(childNode) {
 layoutTree.Node.prototype.getName = function(){
   return this.name;
 }
-
+ 
 // LAYOUTTREE CLASS
 layoutTree.LayoutTree = function() {
   this.topChildren = [];
