@@ -1,40 +1,45 @@
+var layoutTree = exports = module.exports = {};
 
-CLASS_TYPE = "Class"
-METHOD_TYPE = "Method"
-PARAMETER_TYPE = "Paramater"
+layoutTree.CLASS_TYPE = "Class"
+layoutTree.METHOD_TYPE = "Method"
+layoutTree.PARAMETER_TYPE = "Paramater"
 
 // NODE CLASS
-var Node = function(nodeName, nodeType) {
+layoutTree.Node = function(nodeName, nodeType) {
   this.children = [];
   this.type = nodeType;
   this.name = nodeName;
 }
 
-Node.prototype.getChildren = function() {
+layoutTree.Node.prototype.getChildren = function() {
   return this.children;
 }
 
-Node.prototype.getType = function() {
+layoutTree.Node.prototype.getType = function() {
   return this.type;
 }
 
-Node.prototype.addChild = function(childNode) {
+layoutTree.Node.prototype.addChild = function(childNode) {
   this.children.push(childNode);
 }
 
-Node.prototype.getName = function(){
+layoutTree.Node.prototype.getName = function(){
   return this.name;
 }
 
 // LAYOUTTREE CLASS
-function LayoutTree() {
+layoutTree.LayoutTree = function() {
   this.topChildren = [];
 }
 
-LayoutTree.prototype.getTopChildren = function() {
+layoutTree.LayoutTree.prototype.getTopChildren = function() {
   return this.topChildren;
 }
 
-LayoutTree.prototype.addtopChild = function(topNode) {
+layoutTree.LayoutTree.prototype.addtopChild = function(topNode) {
   this.topChildren.push(topNode);
 }
+
+var n1 = new layoutTree.Node("Animal", layoutTree.CLASS_TYPE);
+console.log(n1)
+console.log(n1.getName())
