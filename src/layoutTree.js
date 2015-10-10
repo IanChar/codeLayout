@@ -36,10 +36,10 @@ layoutTree.LayoutTree.prototype.getTopChildren = function() {
   return this.topChildren;
 }
 
-layoutTree.LayoutTree.prototype.addtopChild = function(topNode) {
+layoutTree.LayoutTree.prototype.addTopChild = function(topNode) {
   this.topChildren.push(topNode);
 }
 
-var n1 = new layoutTree.Node("Animal", layoutTree.CLASS_TYPE);
-console.log(n1)
-console.log(n1.getName())
+var a = new layoutTree.Node("animal", layoutTree.CLASS_TYPE)
+a.addChild(new layoutTree.Node("boo", layoutTree.CLASS_TYPE))
+console.log(a)
