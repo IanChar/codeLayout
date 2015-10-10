@@ -1,6 +1,13 @@
 var http = require('https');
 var fs = require('fs');
 
+function getCurrentTab(){
+	chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+	    var url = tabs[0].url;
+	});
+	return url;
+}
+
 function getRaw(url){
 	var user = url.split(".com/");
 	user[1] = user[1].replace("blob/", "");
@@ -22,3 +29,7 @@ function getFile(raw){
 
 var test = getRaw("https://github.com/cata5492/ai3202/blob/master/Assignment2/assignment2-cata5492.py");
 getFile(test);
+
+//var currentUrl = getCurrentTab();
+//var rawUrl = getRaw(currentUrl);
+//getFile(rawUrl)

@@ -48,6 +48,37 @@ Parser.ParseToTree.prototype.constructChild = function(name, nodeType, level) {
   }
 }
 
+Parser.ParseToTree.prototype.atLeastLevel = function(lineNum, levels) {
+  if(levels == 0){
+    console.log("Level is zero. Should not occur.");
+    return false;
+  }
+  if(this.lines[lineNum].charAt(0).localeCompare(" ") == 0){
+    var i = 0;
+    while(i < levels){
+      if(this.lines[lineNum].substring(i*4, 4+i*4).localeCompare("    ") != 0){
+        return false;
+      }
+      i++;
+    }
+    return true;
+  }
+  else if(this.lines[lineNum].charAt(0).localeCompare("\t") == 0){
+    var i = 0;
+    while(i < levels){
+      if(this.lines[lineNum].charAt(0).localeCompare("\t") != 0){
+        return false;
+      }
+      i++;
+    }
+    return true;
+  }
+  else{
+    console.log("Character is not a tab or a space.");
+    return false;
+  }
+}
+
 Parser.ParseToTree.prototype.fillTree = function() {
   this.parseText()
   this.currLineNum = 0;
