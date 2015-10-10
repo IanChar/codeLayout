@@ -6,26 +6,8 @@ function getRaw(url){
 
 	return rawUrl;
 }
-/*
-function httpGetAsync(theUrl, callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
-
-function call(back){
-	console.log(back);
-}
-
-httpGetAsync(pr, call);*/
 
 var pr = getRaw("https://github.com/cata5492/ai3202/blob/master/Assignment2/assignment2-cata5492.py");
-
 
 var http = require('https');
 var fs = require('fs');
