@@ -8,6 +8,7 @@ Parser.ParseToTree = function(filename) {
   this.filename = filename;
   this.lines;
   this.tree = new lt.LayoutTree();
+  this.currLineNum = 0;
 }
 
 Parser.ParseToTree.prototype.parseText = function() {
@@ -15,23 +16,53 @@ Parser.ParseToTree.prototype.parseText = function() {
   this.lines = text.split('\n')
 }
 
-Parser.ParseToTree.prototype.constructChild = function(name, nodeType,lineNumber,
-    level) {
-  n = new lt.Node()
+Parser.ParseToTree.prototype.constructChild = function(name, nodeType, level) {
+  n = new lt.Node(name, nodeType);
+  var currLine = this.currLineNum + 1;
+  var nextLevel = level + 1;
+  var startIndex;
+  while (this.atLeastLevel(currLine, nextLevel)) {
+    // Set the start index
+    if (this.lines[currLine].charAt(0) == " ") {
+      startIndex = level * 4;
+    } else {
+      startIndex = level;
+    }
+      // Check to see if there is a def
+      if (this.lines[currLine].substring(startIndex, startIndex + 3) == "def") {
+        var name = this.lines[currLine].substring(startIndex + 4,
+            this.lines[currLine].indexOf("("))
+        n.addChild(this.constructChild(name, lt.METHOD_TYPE, currLine,
+            nextLevel))
+      }
+      // Check to see if there is Class
+      else if (this.lines[currLine].substring(startIndex, startIndex + 4
+            == "Class") {
+        var name = this.lines[currLine].substring(startIndex + 4,
+            this.lines[currLine].indexOf("("))
+        n.addChild(this.constructChild(name, lt.CLASS_TYPE, currLine,
+            nextLevel))
+      }
+    }
+    this.currLineNum = currLine;
+  }
 }
 
 Parser.ParseToTree.prototype.fillTree = function() {
   this.parseText()
-  for (var i = 0; i < lines.length; i++) {
+  this.currLineNum = 0;
+  while (this.currLineNum < lines.length) {
     currLine = this.lines[i];
     if (currLine.substring(0, 3) == "def") {
       var name = currLine.split(" ")[1];
       name = name.substring(0, name.indexOf("("));
-      this.tree.addChild(this.constructChild(name, lt.METHOD_TYPE, i, 0));
+      this.tree.addChild(this.constructChild(name, lt.METHOD_TYPE, 0));
     } else if (currLine.substring(0, 4) == "Class") {
       var name = currLine.split(" ")[1];
       name = name.substring(0, name.indexOf("("));
-      this.tree.addChild(this.constructChild(name, lt.CLASS_TYPE, i, 0));
+      this.tree.addChild(this.constructChild(name, lt.CLASS_TYPE, 0));
+    } else {
+      this.currLineNum++;
     }
   }
   return this.tree;
