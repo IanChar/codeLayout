@@ -17,13 +17,11 @@ Parser.ParseToTree.prototype.parseText = function() {
 }
 
 Parser.ParseToTree.prototype.constructChild = function(name, nodeType, level) {
-  n = new lt.Node(name, nodeType);
+  var n = new lt.Node(name, nodeType);
   var currLine = this.currLineNum + 1;
   var nextLevel = level + 1;
   var startIndex;
   while (this.atLeastLevel(currLine, nextLevel)) {
-    console.log("Looking at...")
-    console.log(this.lines[currLine])
     // Set the start index
     if (this.lines[currLine].length != 0) {
       if (this.lines[currLine].charAt(0) == " ") {
@@ -31,25 +29,17 @@ Parser.ParseToTree.prototype.constructChild = function(name, nodeType, level) {
       } else {
         startIndex = nextLevel;
       }
-      console.log(this.lines[currLine].substring(startIndex, startIndex + 3));
-      console.log(this.lines[currLine].substring(startIndex, startIndex + 3) == "def")
-      console.log(nextLevel)
       // Check to see if there is a def
       if (this.lines[currLine].substring(startIndex, startIndex + 3) == "def") {
-        var name = this.lines[currLine].substring(startIndex + 4,
+        var newName = this.lines[currLine].substring(startIndex + 4,
             this.lines[currLine].indexOf("("))
-        console.log("My name is...")
-        console.log(name)
-        n.addChild(this.constructChild(name, lt.METHOD_TYPE, currLine,
-            nextLevel))
+        n.addChild(this.constructChild(newName, lt.METHOD_TYPE, nextLevel))
       }
       // Check to see if there is Class
-      else if (this.lines[currLine].substring(startIndex, startIndex + 5
-              == "class")) {
+      else if (this.lines[currLine].substring(startIndex, startIndex + 5) == "class") {
         var name = this.lines[currLine].substring(startIndex + 4,
             this.lines[currLine].indexOf("("))
-        // n.addChild(this.constructChild(name, lt.CLASS_TYPE, currLine,
-        //     nextLevel))
+        n.addChild(this.constructChild(name, lt.CLASS_TYPE, nextLevel))
       }
     }
     currLine++;
@@ -119,6 +109,5 @@ Parser.ParseToTree.prototype.fillTree = function() {
   return this.tree;
 }
 
-var test = new Parser.ParseToTree('testPython.py')
-test.parseText()
-console.log(test.fillTree())
+// var test = new Parser.ParseToTree("testPython.py")
+// console.log(test.fillTree())
