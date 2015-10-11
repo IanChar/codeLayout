@@ -54,7 +54,12 @@ Parser.ParseToTree.prototype.atLeastLevel = function(lineNum, levels) {
     console.log("Level is zero. Should not occur.");
     return false;
   }
+  // Out of lines case
+  if (lineNum >= this.lines.length) {
+    return false;
+  }
   // Empty string case keep moving...
+  console.log(lineNum)
   if (this.lines[lineNum].length == 0) {
     return true;
   }
@@ -109,5 +114,7 @@ Parser.ParseToTree.prototype.fillTree = function() {
   return this.tree;
 }
 
-// var test = new Parser.ParseToTree("testPython.py")
-// console.log(test.fillTree())
+var test = new Parser.ParseToTree("assignment2-cata5492.py")
+test.parseText()
+console.log(test.lines.length)
+console.log(test.fillTree())
