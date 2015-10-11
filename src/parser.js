@@ -59,7 +59,6 @@ Parser.ParseToTree.prototype.atLeastLevel = function(lineNum, levels) {
     return false;
   }
   // Empty string case keep moving...
-  console.log(lineNum)
   if (this.lines[lineNum].length == 0) {
     return true;
   }
@@ -115,6 +114,23 @@ Parser.ParseToTree.prototype.fillTree = function() {
 }
 
 var test = new Parser.ParseToTree("assignment2-cata5492.py")
+var tree = test.fillTree();
+console.log(tree)
 test.parseText()
-console.log(test.lines.length)
-console.log(test.fillTree())
+
+var makeHtml = function() {
+  var children = tree.getTopChildren();
+  var metaAcc = ""
+  for (var i = 0; i < children.length; i++) {
+    metaAcc += accHtml(children[i], 1, "");
+  }
+}
+
+var accHtml = function(node, level, acc) {
+  console.log("<h" + level + "> " + node.getType() + " - " + node.getName() + "</h" + level + ">");
+  var children = node.getChildren();
+  for (var i = 0; i < children.length; i++) {
+    accHtml(children[i], level + 1, acc);
+  }
+}
+ makeHtml()

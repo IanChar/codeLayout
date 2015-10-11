@@ -39,3 +39,5 @@ layoutTree.LayoutTree.prototype.getTopChildren = function() {
 layoutTree.LayoutTree.prototype.addTopChild = function(topNode) {
   this.topChildren.push(topNode);
 }
+
+var n1 = new layoutTree.Node("Animal", layoutTree.CLASS_TYPE);

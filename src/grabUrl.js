@@ -1,3 +1,5 @@
+var grabber = exports = module.exports = {};
+
 var http = require('https');
 var fs = require('fs');
 
