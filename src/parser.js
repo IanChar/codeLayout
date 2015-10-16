@@ -83,7 +83,7 @@ Parser.ParseToTree.prototype.atLeastLevel = function(lineNum, levels) {
     return true;
   }
   else{
-    console.log("Character is not a tab or a space.");
+    // Character isn't space or tab
     return false;
   }
 }
@@ -113,24 +113,24 @@ Parser.ParseToTree.prototype.fillTree = function() {
   return this.tree;
 }
 
-var test = new Parser.ParseToTree("assignment2-cata5492.py")
-var tree = test.fillTree();
-console.log(tree)
-test.parseText()
+Parser.ParseToTree.prototype.makeHtml = function() {
+  var children = this.tree.getTopChildren();
+  var fin = ""
 
-var makeHtml = function() {
-  var children = tree.getTopChildren();
-  var metaAcc = ""
+  var findHtmlAttr = function(node, level) {
+    console.log("<h" + level + "> " + node.getType() + " - " + node.getName() + "</h" + level + ">");
+    var children = node.getChildren();
+    for (var i = 0; i < children.length; i++) {
+      findHtmlAttr(children[i], level + 1);
+    }
+  }
+
   for (var i = 0; i < children.length; i++) {
-    metaAcc += accHtml(children[i], 1, "");
+    fin += findHtmlAttr(children[i], 1);
   }
 }
 
-var accHtml = function(node, level, acc) {
-  console.log("<h" + level + "> " + node.getType() + " - " + node.getName() + "</h" + level + ">");
-  var children = node.getChildren();
-  for (var i = 0; i < children.length; i++) {
-    accHtml(children[i], level + 1, acc);
-  }
-}
- makeHtml()
+
+var p2t = new Parser.ParseToTree("assignment2-cata5492.py")
+p2t.fillTree();
+p2t.makeHtml();
